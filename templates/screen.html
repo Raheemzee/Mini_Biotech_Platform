@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Compound Screening</title>
+
+<style>
+body {
+    margin:0;
+    font-family:Arial;
+    background:linear-gradient(135deg,#020617,#0f172a);
+    color:white;
+}
+
+.navbar {
+    display:flex;
+    justify-content:space-between;
+    padding:20px 40px;
+    background:rgba(255,255,255,0.03);
+}
+
+.nav a {
+    margin-left:20px;
+    color:#94a3b8;
+    text-decoration:none;
+}
+
+.container {
+    max-width:900px;
+    margin:auto;
+    padding:30px;
+}
+
+.card {
+    background:rgba(255,255,255,0.05);
+    padding:20px;
+    border-radius:12px;
+}
+
+input, button {
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    border:none;
+    border-radius:8px;
+}
+
+input { background:#1e293b; color:white; }
+
+button {
+    background:#38bdf8;
+    color:white;
+    font-weight:bold;
+}
+
+table {
+    width:100%;
+    margin-top:20px;
+    border-collapse:collapse;
+}
+
+th, td {
+    padding:12px;
+    border-bottom:1px solid #334155;
+    text-align:center;
+}
+
+th {
+    background:#1e293b;
+    color:#38bdf8;
+}
+</style>
+</head>
+
+<body>
+
+<div class="navbar">
+    <div>💊 Drug Discovery</div>
+    <div class="nav">
+        <a href="/">Home</a>
+        <a href="/dashboard">Dashboard</a>
+    </div>
+</div>
+
+<div class="container">
+
+<h1>Compound Screening Tool</h1>
+
+<div class="card">
+<form method="POST" enctype="multipart/form-data">
+<input type="file" name="file" required>
+<button>Screen Compounds</button>
+</form>
+</div>
+
+{% if results %}
+<table>
+<tr>
+<th>Name</th>
+<th>Score</th>
+<th>Status</th>
+</tr>
+
+{% for r in results %}
+<tr>
+<td>{{ r.name }}</td>
+<td>{{ r.score }}</td>
+<td>{{ r.status }}</td>
+</tr>
+{% endfor %}
+</table>
+{% endif %}
+
+</div>
+
+</body>
+</html>

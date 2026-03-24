@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dashboard</title>
+
+<style>
+body {
+    margin:0;
+    font-family:Arial;
+    background:#020617;
+    color:white;
+}
+
+.navbar {
+    display:flex;
+    justify-content:space-between;
+    padding:20px 40px;
+    background:rgba(255,255,255,0.03);
+}
+
+.nav a {
+    margin-left:20px;
+    color:#94a3b8;
+    text-decoration:none;
+}
+
+.container {
+    padding:30px;
+}
+
+table {
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+}
+
+th, td {
+    padding:12px;
+    border-bottom:1px solid #334155;
+    text-align:center;
+}
+
+th {
+    background:#1e293b;
+    color:#38bdf8;
+}
+
+tr:hover {
+    background:rgba(255,255,255,0.05);
+}
+
+img {
+    width:70px;
+    border-radius:8px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="navbar">
+    <div>🧬 BioVision Dashboard</div>
+    <div class="nav">
+        <a href="/">Home</a>
+        <a href="/screen">Drug Screening</a>
+    </div>
+</div>
+
+<div class="container">
+<h1>📊 Experiment History</h1>
+
+<table>
+<tr>
+<th>ID</th>
+<th>Image</th>
+<th>Tool</th>
+<th>Result</th>
+<th>Time</th>
+</tr>
+
+{% for d in data %}
+<tr>
+<td>{{ d[0] }}</td>
+<td><img src="/uploads/{{ d[1] }}"></td>
+<td>{{ d[2] }}</td>
+<td>{{ d[3] }}</td>
+<td>{{ d[4] }}</td>
+</tr>
+{% endfor %}
+</table>
+
+</div>
+
+</body>
+</html>
