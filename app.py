@@ -159,21 +159,34 @@ def analyze_colonies(image_path, output_path, heatmap_path):
 # ================= COMPOUND =================
 def screen_compounds(csv_path, output_path):
     df = pd.read_csv(csv_path)
-    results=[]
+    results = []
+    passed = []
 
-    for _,row in df.iterrows():
-        score=0
-        if row['mw']<=500: score+=1
-        if row['logp']<=5: score+=1
-        if row['hbd']<=5: score+=1
-        if row['hba']<=10: score+=1
+    for _, row in df.iterrows():
+        score = 0
 
-        status="PASS" if score>=3 else "FAIL"
+        if row['mw'] <= 500: score += 1
+        if row['logp'] <= 5: score += 1
+        if row['hbd'] <= 5: score += 1
+        if row['hba'] <= 10: score += 1
 
-        results.append({"name":row['name'],"score":score,"status":status})
+        status = "PASS" if score >= 3 else "FAIL"
 
-    out_df=pd.DataFrame(results)
-    out_df.to_csv(output_path,index=False)
+        result = {
+            "name": row['name'],
+            "score": score,
+            "status": status
+        }
+
+        results.append(result)
+
+        if status == "PASS":
+            passed.append(result)
+
+    pd.DataFrame(results).to_csv(output_path, index=False)
+
+    pass_path = os.path.join(RESULT_FOLDER, "passed_compounds.csv")
+    pd.DataFrame(passed).to_csv(pass_path, index=False)
 
     return results
 
@@ -226,6 +239,12 @@ def up(f): return send_file(os.path.join(UPLOAD_FOLDER,f))
 
 @app.route("/results/<f>")
 def res(f): return send_file(os.path.join(RESULT_FOLDER,f))
+
+@app.route("/download_passed")
+def download_passed():
+    path = os.path.join(RESULT_FOLDER, "passed_compounds.csv")
+    return send_file(path, as_attachment=True)
+    
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 10000))
