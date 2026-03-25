@@ -6,7 +6,7 @@
 <style>
 body {
     margin:0;
-    font-family:Arial;
+    font-family:'Segoe UI',sans-serif;
     background:linear-gradient(135deg,#020617,#0f172a);
     color:white;
 }
@@ -15,7 +15,6 @@ body {
     display:flex;
     justify-content:space-between;
     padding:20px 40px;
-    background:rgba(255,255,255,0.03);
 }
 
 .nav a {
@@ -68,6 +67,9 @@ th {
     background:#1e293b;
     color:#38bdf8;
 }
+
+.pass { color:#22c55e; font-weight:bold; }
+.fail { color:#ef4444; font-weight:bold; }
 </style>
 </head>
 
@@ -104,10 +106,17 @@ th {
 <tr>
 <td>{{ r.name }}</td>
 <td>{{ r.score }}</td>
-<td>{{ r.status }}</td>
+<td class="{{ 'pass' if r.status == 'PASS' else 'fail' }}">
+    {{ r.status }}
+</td>
 </tr>
 {% endfor %}
 </table>
+
+<a href="/download_passed">
+<button style="margin-top:15px;">Download Passing Compounds</button>
+</a>
+
 {% endif %}
 
 </div>
